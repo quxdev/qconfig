@@ -1,0 +1,42 @@
+# vim: filetype=sh
+
+# osx
+if [[ $OSTYPE == darwin* ]]; then
+  alias d="ls -FGO"
+  alias ls="ls -FGO"
+else
+  alias d='ls -F'
+  alias ls='ls -F'
+fi
+
+gzipchk() {
+  curl -s -L -I -H 'Accept-Encoding: gzip,deflate' "$@" | grep --color "Content-Encoding"
+}
+
+pyclean() {
+  target=${1:-.}
+
+  find ${target} -type d -name "__pycache__" -print0 | xargs -0 rm -rf
+}
+
+quxfind() {
+  if [[ $1 == "" ]]; then
+    echo "Usage: ${FUNCNAME[0]} <search_string> [<file_glob>]"
+    return
+  fi
+
+  find_name=${2:-*.py}
+
+  # Always ignore virtualenv folders
+  find . -type f -name "${find_name}" -print0 | xargs -0 grep -i "$1" | grep -v "[v]*env/"
+}
+
+# python shortcuts
+alias profile="python -m cProfile"
+
+for f in `ls $HOME/.qux_*`; do
+  if [ -f ${f} ]; then
+    echo "Loading ${f}"
+    source ${f}
+  fi
+done
