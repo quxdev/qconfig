@@ -34,7 +34,7 @@ quxfind() {
 # python shortcuts
 alias profile="python -m cProfile"
 
-for f in `ls $HOME/.qux_*`; do
+for f in $(find $HOME -type f -name '.qux_*'); do
   if [ -f ${f} ]; then
     echo "Loading ${f}"
     source ${f}
