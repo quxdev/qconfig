@@ -1,0 +1,4 @@
+%basicsudo ALL=(ALL) NOPASSWD: /usr/sbin/shutdown *
+%basicsudo ALL=(ALL) NOPASSWD: /usr/sbin/service *
+%basicsudo ALL=(ALL) NOPASSWD: /usr/bin/apt install *
+%basicsudo ALL=(ALL) NOPASSWD: /usr/bin/apt-get install *
