@@ -21,7 +21,7 @@ for raw in ${input_files[@]}; do
     image_files+=(${img})
 
     # convert file 
-    convert ${raw} +profile "*" ${img}
+    magick convert ${raw} +profile "*" ${img}
 
     # get max height and width of all files
     w=`identify -format '%w' ${img}`
@@ -39,22 +39,21 @@ done
 
 for img in ${image_files[@]}; do
     # resize file and normalize height
-    convert ${img} -resize x${max_h} +profile "*" ${img};
+    magick convert ${img} -resize x${max_h} +profile "*" ${img};
 
     w=`identify -format '%w' ${img}`
     new_w=$((w + 100))
     h=`identify -format '%h' ${img}`
     new_h=$((h + 200))
 
-    convert -size ${new_w}x${new_h} xc:white ${img} -gravity center -composite ${img}
-    
+    magick convert -size ${new_w}x${new_h} xc:white ${img} -gravity center -composite ${img}
 done
 
-convert +append ${image_files[@]} ${output_file}
+magick convert +append ${image_files[@]} ${output_file}
 w=`identify -format '%w' ${output_file}`
 h=`identify -format '%h' ${output_file}`
 w=$((w + 100))
-convert -size ${w}x${h} xc:white ${output_file} -gravity center -composite ${output_file}
+magick convert -size ${w}x${h} xc:white ${output_file} -gravity center -composite ${output_file}
 
 # Cleanup
 for img in ${image_files[@]}; do
